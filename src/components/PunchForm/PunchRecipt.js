@@ -1,11 +1,18 @@
 import React from 'react';
 
-const PunchRecipt = () => {
-    
+const PunchRecipt = ({ punch, user }) => {
+    const { location, in_out, date, time } = punch;
     return (
         <div>
-            <p>Place snippet of what was added to List.</p>
-            <p>Name, Date, IN/Out, User, Time... Possibly Last punch in</p>
+            <div className='fw6 lh-copy f3' >
+                <label className="db">{`Your following punch has been recorded.`}</label>
+                <label className="db">{`Summary:`}</label>
+                <label className="db">{`Place: ${location}`}</label>
+                <label className="db">{`User: ${user.name}`} </label>
+                <label className="db">{`In/Out: ${in_out}`}</label>
+                <label className="db">{`Date: ${date}`}</label>
+                <label className="db">{`Time: ${time}`}</label>
+            </div>
 
         </div>
     )
