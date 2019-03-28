@@ -4,6 +4,7 @@ import Navigation from './components/Navigation/Navigation';
 import PunchForm from './components/PunchForm/PunchForm';
 import Menu from './components/Menu/Menu';
 import History from './components/History/History';
+import PunchRecipt from './components/PunchForm/PunchRecipt';
 import './App.css';
 
 class App extends Component {
@@ -17,31 +18,26 @@ class App extends Component {
     }
   }
 
-
-
-
-
-
-
-
- 
-
-
-
+  punchIn_Out = (punch) => {
+    if (punch === 'In'){
+      this.setState({in_out: 'IN'})
+    }
+    if (punch === 'Out'){
+      this.setState({in_out: 'OUT'})
+    }
+  }
+  
   onRouteChange = (route) => {
-    if (route === 'punchIn' || route === 'punchOut'){
-      if(route === 'punchIn'){
-        this.setState({in_out: 'IN'})
-      }else {
-        this.setState({in_out: 'OUT'})
-      }
+    if (route === 'punchform'){
       this.setState({route:'punchform'})
+    }
+    else if (route === 'punchrecipt'){
+      this.setState({route:'punchrecipt'})
     }
     else if(route === 'home'){
       this.setState({
         isSignedIn: true, 
         route: route});
-        
     } 
     else if(route === 'signin'){
       this.setState({
@@ -53,22 +49,24 @@ class App extends Component {
     }
   }
 
-
-
   render() {
     const { route, isSignedIn, in_out } = this.state;
     return (
       <div className="App">
         <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn}/>
         { route === 'home'
-          ?<Menu onRouteChange={this.onRouteChange} />
+          ?<Menu onRouteChange={this.onRouteChange} punchIn_Out={this.punchIn_Out} />
           :(
             route === 'punchform'
-            ?<PunchForm in_out={in_out}  />
+            ?<PunchForm in_out={in_out} onRouteChange={this.onRouteChange}  />
             :(
               route === 'history'
               ?<History />
-              :<SignIn onRouteChange={this.onRouteChange}/>
+              :(
+                route === 'signin'
+                ?<SignIn onRouteChange={this.onRouteChange}/>
+                :<PunchRecipt />
+              )
             )
           )
         }

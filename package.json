@@ -5,6 +5,7 @@
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-qr-reader": "^2.2.1",
     "react-scripts": "2.1.8",
     "tachyons": "^4.11.1"
   },

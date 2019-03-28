@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Menu = ({onRouteChange}) => {
+const Menu = ({onRouteChange, punchIn_Out}) => {
         return(
             <div className='br3 pa2 ba  mv4 w-100 w-50-m w-25-1 mw6 shadow-5 center' >
             
@@ -15,7 +15,10 @@ const Menu = ({onRouteChange}) => {
                             className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white" 
                             type="submit" 
                             value="Punch Out"
-                            onClick={() => onRouteChange('punchOut')} 
+                            onClick={() => {
+                                onRouteChange('punchform');
+                                punchIn_Out('Out');
+                            }} 
                             />
                         </div>
                         <div className="mt3">
@@ -23,7 +26,10 @@ const Menu = ({onRouteChange}) => {
                             className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
                             type="submit" 
                             value="Punch In"
-                            onClick={() => onRouteChange('punchIn')}
+                            onClick={() => {
+                                onRouteChange('punchform');
+                                punchIn_Out('In');
+                                }}
                             />
                         </div>
                         <div className="mv3">
