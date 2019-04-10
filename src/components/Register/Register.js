@@ -25,7 +25,6 @@ class Register extends React.Component{
         
         if (box.checked){
             this.setState({registerAdmin: true })
-            console.log(this.state.registerAdmin);
         } else {
             this.setState({registerAdmin: false })
         }

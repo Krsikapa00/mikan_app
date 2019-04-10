@@ -5,6 +5,7 @@ import PunchForm from './components/PunchForm/PunchForm';
 import Menu from './components/Menu/Menu';
 import EditUsers from './components/EditUsers/EditUsers';
 import History from './components/History/History';
+import Locations from './components/Locations/Locations';
 import Register from './components/Register/Register';
 import PunchRecipt from './components/PunchForm/PunchRecipt';
 import './App.css';
@@ -27,7 +28,7 @@ class App extends Component {
         date: '',
         time: ''
     },
-    historyarray:[]
+    historyarray:[],
   }}
 
   punchSubmit = (data) =>{
@@ -41,24 +42,40 @@ class App extends Component {
         id: id
     }});
     this.onRouteChange('punchrecipt');
-  }
+  } 
 
-  historyarr = () => {
-    fetch(`http://localhost:3000/history`, {
+  // historyarr = () => {
+  //   fetch(`http://localhost:3000/history`, {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({
+  //           id: this.state.user.id
+  //       })
+  //   })
+  //   .then(response => response.json())
+  //   .then(puncharray =>{
+  //       this.setState({historyarray: puncharray});
+  //   })
+  //   .catch(err => console.log(err));
+  //   }
+
+  editUsersArr = () =>{
+
+    fetch(`http://localhost:3000/edituserslist`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            id: this.state.user.id
+            id: this.state.user.id,
+            admin: this.state.user.admin,
         })
     })
     .then(response => response.json())
-    .then(puncharray =>{
-        this.setState({historyarray: puncharray});
+    .then(usersArray =>{
+        this.setState({editUsersarray: usersArray})
+        
     })
     .catch(err => console.log(err));
-    }
-
-
+  }
  
 
   loadUser = (user) => {
@@ -80,28 +97,27 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'punchform'){
-      this.setState({route:'punchform'})
     }
     else if (route === 'punchrecipt'){
-      this.setState({route:'punchrecipt'})
     }
     else if(route === 'home'){
       this.setState({
-        isSignedIn: true, 
-        route: route});
+        isSignedIn: true});
     } 
     else if(route === 'signin'){
       this.setState({
-        isSignedIn: false,
-        route: route});
+        isSignedIn: false
+      });
     }
-    else if (route === 'history'){
-      this.historyarr();
-      this.setState({route:'history'})
+    // else if (route === 'history'){
+    //   this.historyarr();
+    // }
+    else if (route === 'editusers'){
     }
-    else {
-      this.setState({route: route})
+    else if (route === 'editlocations'){
     }
+    
+  this.setState({route: route})  
   }
 
   render() {
@@ -113,30 +129,38 @@ class App extends Component {
           ?<Menu onRouteChange={this.onRouteChange} punchIn_Out={this.punchIn_Out} user={user} />
           :(
             route === 'punchform'
-            ?<PunchForm 
-              punch={punch} 
-              user={user}
-              onRouteChange={this.onRouteChange}
-              onSubmitInfo={this.onSubmitInfo} 
-              punchSubmit={this.punchSubmit}
-              />
-            :(
-              route === 'history'
-              ?<History user={user} historyarray={historyarray} />
+              ?<PunchForm 
+                punch={punch} 
+                user={user}
+                onRouteChange={this.onRouteChange}
+                onSubmitInfo={this.onSubmitInfo} 
+                punchSubmit={this.punchSubmit}
+                />
               :(
-                route === 'signin'
-                ?<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
-                :(
-                  route === 'punchrecipt'
-                  ?<PunchRecipt punch={punch} user={user} />
+                route === 'history'
+                  ?<History user={user} historyarray={historyarray} />
                   :(
-                    route === 'register'
-                      ?<Register user={user} onRouteChange={this.onRouteChange} />
-                      :<EditUsers user={user} />
+                    route === 'signin'
+                      ?<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
+                      :(
+                        route === 'punchrecipt'
+                          ?<PunchRecipt punch={punch} user={user} />
+                          :(
+                            route === 'register'
+                              ?<Register user={user} onRouteChange={this.onRouteChange} />
+                              :(
+                                route === 'editusers'
+                                  ?<EditUsers user={user} onRouteChange={this.onRouteChange} />
+                                  :(
+                                    route === 'editlocations'
+                                      ?<Locations user={user} onRouteChange={this.onRouteChange}/>
+                                      :<div>YOU MESSED UP</div>
+                                  )
+                              )
+                          )
+                      )
                   )
-                )
               )
-            )
           )
         }
       </div>

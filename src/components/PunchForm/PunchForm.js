@@ -6,28 +6,44 @@ class PunchForm extends React.Component {
     constructor(){
         super();
         this.state = {
-          location: ''
+          location: '',
+          locationcode: ''
         }
       }
     
     
     handleScan = (data) => {
+        // if (data) {
+        //     this.setState({location: data});
+        // } else {
+        //     this.setState({location: ''});
+        // }
         if (data) {
-            this.setState({location: data});
+            fetch('http://localhost:3000/locationscheck', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        location: data
+                    })
+            })
+            .then(response => response.json())
+            .then(resp => {
+                if (!resp.id) {
+                    this.setState({location: ''});
+                } else {
+                    this.setState({location: resp.name, locationcode: resp.code});
+                }
+            })
+            .catch(err => console.log(err));
         } else {
             this.setState({location: ''});
         }
-      }
+    }
 
     handleError = (err) => {
         console.error(err)
     }
 
-    getTime = () => {
-        const today = new Date();
-        const time = (`${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`);
-        return time;
-    }
     getDate = () => {
         const today = new Date();
         const date = (`${today.getFullYear()}/${(today.getMonth()+1)}/${today.getDate()}`);
@@ -36,14 +52,13 @@ class PunchForm extends React.Component {
 
     onRouteChange = () => {
         if (this.state.location !== ''){
+            
             fetch('http://localhost:3000/recordpunch', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: this.props.user.id,
-                    location: this.state.location,
-                    time: this.getTime(),
-                    date: this.getDate(),
+                    location: this.state.locationcode,
                     in_out: this.props.punch.in_out
                 })
             })
@@ -51,9 +66,9 @@ class PunchForm extends React.Component {
             .then(punch => {
                 // eslint-disable-next-line
                 if (punch.id == this.props.user.id) {
+                    this.props.punchSubmit(punch);
                     const button = document.getElementById('submit');
                     button.disabled = true;
-                    this.props.punchSubmit(punch);
                     
                 }
             })

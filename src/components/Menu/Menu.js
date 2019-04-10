@@ -22,6 +22,14 @@ const Menu = ({onRouteChange, punchIn_Out, user}) => {
                         onClick={() => onRouteChange('editusers')} 
                         />
                 </div>
+                <div className="mv3">
+                    <input 
+                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
+                        type="submit" 
+                        value="Locations"
+                        onClick={() => onRouteChange('editlocations')} 
+                        />
+                </div>
             </div>
         )
     }
