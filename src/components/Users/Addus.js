@@ -1,9 +1,11 @@
 import React from 'react';
+import Submitbtn from '../Submitbtn';
+import Inputbar from '../Inputbar';
 
 
-class Register extends React.Component{
-    constructor(props){
-        super(props);
+class Addus extends React.Component{
+    constructor(){
+        super();
         this.state = {
             registerName: '',
             registerPassword: '',
@@ -31,7 +33,7 @@ class Register extends React.Component{
     }
 
     onRegister = () => { 
-        fetch('http://localhost:3000/register', {
+        fetch('http://localhost:3000/userregister', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -44,49 +46,34 @@ class Register extends React.Component{
         .then(user => {
             console.log(user);
             if (user.id) {
-                this.props.onRouteChange('home');
+                this.props.onReload(`editusers`);
             }
         })
         .catch(err => console.log(err));
         
     }
-
-
-
-
+    
     render(){
-    if (this.props.user.admin === true) {
+    
     return (
         <div>
             <main className="pa4 black-80">
                 <form className="measure center">
                     <div id="sign_up" className="ba b--transparent ph0 mh0">
                         <label className="f4 fw6 ph0 mh0">Register</label>
-                        <div className="mt3">
-                            <label className="db fw6 lh-copy f6" >Name</label>
-                            <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="Name"  id="Name" placeholder='New users name' onChange={this.onNameChange} />
-                        </div>
-                        <div className="mv3">
-                            <label className="db fw6 lh-copy f6" >Password</label>
-                            <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password" placeholder='New users password' onChange={this.onPasswordChange} />
-                        </div>
+                        <Inputbar label='Name' type="text" id="Name" placeholder= "New users name" onChange={this.onNameChange} />
+                        <Inputbar label='Password' type="password" id="password" placeholder= "New users password" onChange={this.onPasswordChange} />
+                        
                         <label className="pa0 ma0 lh-copy f6 pointer"><input id='checkbox' type="checkbox" onClick={() => this.onAdminChange(this)}/> Admin User?</label>
                     </div>
-                    <div className="">
-                        <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="button" value="Register User" onClick={this.onRegister} />
-                    </div>
+                    <Submitbtn value="Register User" onClick={this.onRegister} />
+                   
                 </form>
             </main>     
         </div>
+    
     )
-    } else {
-        return(
-            <div>
-                <p>You do not have access to this part of the site</p>
-            </div>
-        )
-    }
     }
 }
 
-export default Register;
+export default Addus;

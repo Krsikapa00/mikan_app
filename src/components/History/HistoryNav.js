@@ -1,8 +1,7 @@
 import React from 'react';
 
 
-const HistoryNav = ({ user, adminlist, getFilteredHistory }) => {
-
+const HistoryNav = ({ user, adminlist, getFilteredHistory, username }) => {
     const refresh_table = () => {
         const searchuser = document.getElementById('select_user').value; 
         const startdate = document.getElementById('start').value; 
@@ -10,6 +9,7 @@ const HistoryNav = ({ user, adminlist, getFilteredHistory }) => {
         if ( !searchuser || !startdate || !enddate){
             console.log('Fill out ALL options')
         } else {
+            console.log(searchuser)
             getFilteredHistory(searchuser, startdate, enddate);
         }
     }

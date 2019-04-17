@@ -1,79 +1,121 @@
 import React from 'react';
+import Submitbtn from '../Submitbtn';
+import Lastpunch from './Lastpunch';
+import AdminLastpunch from './Adminlastpunch';
 
 
-const Menu = ({onRouteChange, punchIn_Out, user}) => {
-    let admin;
-    if (user.admin){
-        admin = (
+class Menu extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            latestpunch: {},
+            adminlist: [],
+        }
+    }
+
+    getUserList(adminuser){
+        return fetch(`http://localhost:3000/loadusers`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: adminuser.id,
+                admin: adminuser.admin
+            })
+        })
+        .then(response => response.json())
+        .then(usersarray =>{
+            // console.log(usersarray);
+            this.setState({adminlist: usersarray}) 
+            return usersarray;
+        })
+        .catch(err => console.log(err));
+    }
+
+    getLastPunch = (user) => {
+        fetch(`http://localhost:3000/latestpunch`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: user.id,
+            })
+        })
+        .then(response => response.json())
+        .then(resp =>{
+            if (resp.id) {
+                this.setState({latestpunch:resp})
+                // console.log(resp);
+            } else {
+                console.log(resp);
+            }
+        })
+        .catch(err => console.log(err));
+    }
+    
+
+    componentDidMount() {
+        if (this.props.user.admin) {
+            this.getUserList(this.props.user)
+            .then(resp => {
+                this.setState({adminlist:resp})
+            })
+        } else {
+            this.getLastPunch(this.props.user)
+        }
+    }
+    
+    render(){
+        let admin, adminready;
+        const { onRouteChange, user, punchIn_Out } = this.props;
+        const { latestpunch, adminlist } = this.state;
+
+        if (user.admin){
+            admin = (
+                <div>                
+                    <Submitbtn className='w' value="Edit Users" onClick={() => onRouteChange('editusers')} />
+              
+                    <Submitbtn className='w' value="Locations" onClick={() => onRouteChange('editlocations')} />
+                </div>
+            )
+            if (adminlist[0]) {
+                adminready = (
+                    <div>
+                        <AdminLastpunch adminlist={this.state.adminlist} />
+                    </div>
+                )
+            }
+        }
+        return(
             <div>
-                 <div className="mv3">
-                    <input 
-                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
-                        type="submit" 
-                        value="Register New User"
-                        onClick={() => onRouteChange('register')} 
+            <div className='br3 pa2 ba  mv4 w-100 w-50-m w-25-1 mw6 shadow-5 center' >
+            
+                <div className='br3 w-100'>
+                    <div className='w-100 black-80 '>
+                        <Submitbtn className='w' value="Punch Out"
+                            onClick={() => {
+                                onRouteChange('punchform');
+                                punchIn_Out('Out');
+                            }} 
                         />
-                </div>
-                <div className="mv3">
-                    <input 
-                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
-                        type="submit" 
-                        value="Edit Users"
-                        onClick={() => onRouteChange('editusers')} 
+                        <Submitbtn className='w' value="Punch In"
+                            onClick={() => {
+                                onRouteChange('punchform');
+                                punchIn_Out('In');
+                            }}
                         />
+                        <Submitbtn className='w' value="History" onClick={() => onRouteChange('history')} />
+                
+                        {admin}
+                    </div>
                 </div>
-                <div className="mv3">
-                    <input 
-                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
-                        type="submit" 
-                        value="Locations"
-                        onClick={() => onRouteChange('editlocations')} 
-                        />
-                </div>
+            </div>
+            { user.admin == true
+            ? adminready
+            :   <Lastpunch punch={latestpunch} />
+            }
+            
             </div>
         )
     }
-    return(
-        <div className='br3 pa2 ba  mv4 w-100 w-50-m w-25-1 mw6 shadow-5 center' >
-        
-            <div className='br3 w-100'>
-                <div className='w-100 black-80 '>
-                    <div className="mt3 ">
-                    <input 
-                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white" 
-                        type="submit" 
-                        value="Punch Out"
-                        onClick={() => {
-                            onRouteChange('punchform');
-                            punchIn_Out('Out');
-                        }} 
-                        />
-                    </div>
-                    <div className="mt3">
-                    <input 
-                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
-                        type="submit" 
-                        value="Punch In"
-                        onClick={() => {
-                            onRouteChange('punchform');
-                            punchIn_Out('In');
-                            }}
-                        />
-                    </div>
-                    <div className="mv3">
-                    <input 
-                        className=" w-80 pa2 lh-copy ba b--black bg-transparent hover-bg-black hover-white "
-                        type="submit" 
-                        value="History"
-                        onClick={() => onRouteChange('history')} 
-                        />
-                    </div>
-
-                    {admin}
-                </div>
-            </div>
-        </div>
-    )
 }
 
 export default Menu;

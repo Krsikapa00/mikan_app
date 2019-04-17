@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: linear-gradient(89deg, #ee560f 0%, #f0860e 100%)
+  background: linear-gradient(89deg, rgb(83, 29, 255) 0%, rgb(193, 174, 255) 100%)
 }
 
 button {

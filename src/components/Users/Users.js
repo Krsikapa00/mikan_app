@@ -1,66 +1,58 @@
 import React from 'react';
-import Editloc from './Editloc';
-import Addloc from './Addloc';
-import Deleteloc from './Deleteloc';
+import Editus from './Editus';
 import Submitbtn from '../Submitbtn';
+import Deleteus from './Deleteus';
+import Addus from './Addus';
 
-
-class Locations extends React.Component {
+class EditUsers extends React.Component {
     constructor(){
         super();
         this.state = {
             route: 'main',
-            locationarr: [],
-            singleloc: {},
+            singleuser: {},
+            userarr: [],
         }
-    }
+      }
+    
     onRouteChange = (route, user) =>{
-        this.setState({route: route, singleloc:user})
+        this.setState({route: route, singleuser:user})
     }
     
     onReload = (route) => {
         this.setState({route: 'main', singleuser:{}, userarr: []})
-        this.loadlocarr();
-        this.props.onRouteChange(route); 
+        this.editUsersArr();
+        this.props.onRouteChange(route);
     }
 
-    loadlocarr = () =>{
-
-        fetch(`http://localhost:3000/locationsload`, {
-            method: 'GET',
+    editUsersArr = () =>{
+        fetch(`http://localhost:3000/userseditlist`, {
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: this.props.user.id,
+                admin: this.props.user.admin,
+            })
         })
         .then(response => response.json())
-        .then(locarr =>{
-            if (locarr[0].id){
-            this.setState({locationarr: locarr})
-            } else {
-                console.log(locarr)
-            }
-            
+        .then(usersArray =>{
+            this.setState({userarr: usersArray})  
         })
         .catch(err => console.log(err));
-    }
-
-    
-
+      }
 
     componentDidMount() {
-        this.loadlocarr();
-        
+        this.editUsersArr();  
     }
-
     
     render(){
         const { onRouteChange } = this;
-        const { route, singleloc, locationarr } = this.state;
-
+        const { route, singleuser, userarr } = this.state;
         if (route === 'main'){
             return(
                 <div>
                     <div className='w-70 flex justify-end' style={{marginLeft:'auto', marginRight:'auto'}}>
                         <Submitbtn
-                            value="Add Location" 
+                            value="Register User" 
                             onClick={() =>
                                 onRouteChange("add", '')} />
                     </div>
@@ -70,32 +62,29 @@ class Locations extends React.Component {
                                 <thead align='' className='' >
                                     <tr className=''>
                                         <th className=" ">ID</th>
-                                        <th className=" ">Location Name</th>
-                                        <th className=" ">Location Code</th>
-                                        <th className=" ">In Use?</th>
-                                        <th colSpan='2' className=" ">Edit Locations</th>
+                                        <th className=" ">Name</th>
+                                        <th className=" ">Admin?</th>
+                                        <th colSpan='2' className=" ">Edit User</th>
                                     </tr>
                                 </thead>
                                 <tbody className="">
-                                    {locationarr.map(function(data, i){
+                                    {userarr.map(function(data, i){
                                         return(
                                             <tr className='' >
                                                 <td key={'id'} className="">{data.id}</td>
                                                 <td key={'name'} className="">{data.name}</td>
-                                                <td key={'code'} className="">{data.code}</td>
-                                                <td key={'active'} className="">{`${data.active}`}</td>
-                                                <td key={'editlocation'}>
+                                                <td key={'adminuser'} className="">{`${data.admin}`}</td>
+                                                <td key={'editname'}>
                                                     <Submitbtn 
-                                                        value="Edit Location" 
+                                                        value="Edit" 
                                                         onClick={() =>
                                                             onRouteChange("edit", data)} />
                                                 </td>
-                                            
-                                                <td key={'deletelocation'}>
-                                                    <Submitbtn 
-                                                        value="Delete Location" 
+                                                <td key={'deleteuser'}>
+                                                    <Submitbtn  
+                                                        value="Delete" 
                                                         onClick={() =>
-                                                            onRouteChange("delete", data)} /> 
+                                                            onRouteChange("delete", data)} />
                                                 </td>
                                             </tr>
                                         )
@@ -106,22 +95,22 @@ class Locations extends React.Component {
                     </div>
                 </div>
             )
-        } else if (route === 'edit') {
+        }
+        else if (route === 'edit') {
             return(
-            <Editloc target={singleloc}  onReload={this.onReload}/>
+                <Editus target={singleuser}  onReload={this.onReload}/>
             )
         } else if (route === 'add') {
             return(
-                <Addloc onReload={this.onReload}/>
+                <Addus onReload={this.onReload}/>
             )
         }
         else if (route === 'delete') {
             return(
-                <Deleteloc onReload={this.onReload} target={singleloc} />
+                <Deleteus target={singleuser}  onReload={this.onReload}/>
             )
         }
     }
-    
 }
 
-export default Locations; 
+export default EditUsers;

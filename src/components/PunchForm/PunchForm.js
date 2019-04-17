@@ -1,5 +1,7 @@
 import React from 'react'
 import QrReader from 'react-qr-reader';
+import Submitbtn from '../Submitbtn';
+import PunchRecipt from './PunchRecipt';
 
 
 class PunchForm extends React.Component {
@@ -7,19 +9,16 @@ class PunchForm extends React.Component {
         super();
         this.state = {
           location: '',
-          locationcode: ''
+          locationcode: '',
+          punch: {},
+          route: 'punch'
         }
       }
     
     
     handleScan = (data) => {
-        // if (data) {
-        //     this.setState({location: data});
-        // } else {
-        //     this.setState({location: ''});
-        // }
-        if (data) {
-            fetch('https://mikan-app-api.herokuapp.com/locationscheck', {
+        if (data !== null) {
+            fetch('http://localhost:3000/locationscheck', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -53,58 +52,62 @@ class PunchForm extends React.Component {
     onRouteChange = () => {
         if (this.state.location !== ''){
             
-            fetch('https://mikan-app-api.herokuapp.com/recordpunch', {
+            fetch('http://localhost:3000/recordpunch', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: this.props.user.id,
                     location: this.state.locationcode,
-                    in_out: this.props.punch.in_out
+                    in_out: this.props.in_out
                 })
             })
             .then(response => response.json())
             .then(punch => {
                 // eslint-disable-next-line
                 if (punch.id == this.props.user.id) {
-                    this.props.punchSubmit(punch);
+                    this.setState({route:'recipt', punch: punch });
                     const button = document.getElementById('submit');
                     button.disabled = true;
-                    
+                } else {
+                    console.log('punch')
                 }
             })
             .catch(err => console.log(err));
         
     }}
+    // componentDidMount() {
+    //     this.setState({route:'punch'})
+    // }
 
     render() {
-    const { in_out } = this.props.punch;
-    const curDate = this.getDate();
-    return(
-        <div>
-            <QrReader
-                className = 'center'
-                delay={200}
-                onError={this.handleError}
-                onScan={this.handleScan}
-                style={{ width: '500px' }}
-            />
-            <div className='fw6 lh-copy f3' >
-                <label className="db">{`Place: ${this.state.location}`}</label>
-                <label className="db">{`User: ${this.props.user.name}`} </label>
-                <label className="db">{`Date: ${curDate}`}</label>
-                <label className="db">{`In/Out: ${in_out}`}</label>
-            </div>
-            <div className="lh-copy w-20 center">
-                <input 
-                    id="submit"
-                    className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-                    type="submit" 
-                    value="Punch"
-                    onClick={this.onRouteChange}
-                />
-            </div>
-        </div>    
-    )
+        const { in_out } = this.props;
+        const curDate = this.getDate();
+
+        if (this.state.route === 'punch') {
+            return(
+                <div>
+                    <QrReader
+                        className = 'center'
+                        delay={200}
+                        onError={this.handleError}
+                        onScan={this.handleScan}
+                        style={{ width: '35%' }}
+                    />
+                    <div className='fw6 lh-copy f3' >
+                        <label className="db">{`Place: ${this.state.location}`}</label>
+                        <label className="db">{`User: ${this.props.user.name}`} </label>
+                        <label className="db">{`Date: ${curDate}`}</label>
+                        <label className="db">{`In/Out: ${in_out}`}</label>
+                    </div>
+                    <Submitbtn id="submit" value="Punch" onClick={this.onRouteChange}/>
+                    
+                </div>    
+            )
+        } else if (this.state.route === 'recipt') {
+            return (
+                <PunchRecipt punch={this.state.punch} user={this.props.user} />
+            )
+        }
     }
 }
 

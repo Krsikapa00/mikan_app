@@ -3,7 +3,6 @@ import './History.css';
 import ReactToExcel from 'react-html-table-to-excel';
 import HistoryNav from './HistoryNav';
 
-
 class History extends React.Component {
     constructor(){
         super();
@@ -12,11 +11,14 @@ class History extends React.Component {
             historyarray: [],
             searchedusername: '',
         }
-      }
+    }
     
+    username =(name) => {
+        this.setState({searchedusername:name})
+    }
 
     getadminlist = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
+        fetch(`http://localhost:3000/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -32,7 +34,7 @@ class History extends React.Component {
     }
 
     historyarr = () => {
-        fetch(`https://mikan-app-api.herokuapp.com/history`, {
+        fetch(`http://localhost:3000/history`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -47,7 +49,7 @@ class History extends React.Component {
     }
 
     getFilteredHistory = (id, start, end) => {
-        fetch(`https://mikan-app-api.herokuapp.com/filteredhistory`, {
+        fetch(`http://localhost:3000/filteredhistory`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -57,38 +59,34 @@ class History extends React.Component {
             })
         })
         .then(response => response.json())
-        .then(puncharray =>{
-            if (puncharray[0]){
-            const searchedusername = puncharray[0].name;
-            this.setState({historyarray: puncharray, searchedusername: searchedusername });
+        .then(resp =>{
+            const { puncharr, user } = resp;
+            if (puncharr){            
+            this.setState({historyarray: puncharr, searchedusername:user.name });
             } else {
                 console.log('Something went wrong');
-                this.setState({historyarray: puncharray})
             }
         })
         .catch(err => console.log(err));
     }
-
 
     componentDidMount() {
         if(this.props.user.admin){
             this.getadminlist();
         }
         this.historyarr();
+        // console.log(this.state.historyarray)
         this.setState({searchedusername: this.props.user.name})
     }
 
-    
-
     render() {
-        
         const { user } = this.props;
         const { historyarray, adminlist } = this.state
         return(
             <div className="shadow-5 w-80 center">
                 <div> 
-                    {/* Place drop down navigation to choose user specific user history and date range */}
-                    <HistoryNav user={user} adminlist={adminlist} getFilteredHistory={this.getFilteredHistory} />
+                    
+                    <HistoryNav user={user} adminlist={adminlist} getFilteredHistory={this.getFilteredHistory} username={this.username} />
                 </div>
                 <div className="mt4">
                     <table className="table-cont" cellSpacing="0" id='historyTable'>
@@ -126,6 +124,5 @@ class History extends React.Component {
         )
     }
 }
-
 
 export default History;
