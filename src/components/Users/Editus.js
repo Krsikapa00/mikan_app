@@ -29,7 +29,7 @@ const Editus = ({ target, onReload }) => {
     }
 
     const submitUpdate = ( data ) => {
-        fetch(`http://localhost:3000/useredit`, {
+        fetch(`https://mikan-app-api.herokuapp.com/useredit`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(

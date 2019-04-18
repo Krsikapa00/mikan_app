@@ -16,7 +16,7 @@ const Deleteloc = ({onReload, target, }) => {
     }
     const submitDelete = (data) => {
         console.log(data);
-        fetch(`http://localhost:3000/locationdelete`, {
+        fetch(`https://mikan-app-api.herokuapp.com/locationdelete`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(

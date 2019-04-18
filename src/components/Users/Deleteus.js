@@ -16,7 +16,7 @@ const Deleteus = ({onReload, target }) => {
     }
     const submitDelete = (data) => {
         console.log(data);
-        fetch(`http://localhost:3000/userdelete`, {
+        fetch(`https://mikan-app-api.herokuapp.com/userdelete`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(

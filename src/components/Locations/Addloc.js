@@ -51,7 +51,7 @@ class Add extends React.Component {
     }
 
     onAddLocation = () => { 
-        fetch('http://localhost:3000/locationadd', {
+        fetch('https://mikan-app-api.herokuapp.com/locationadd', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
