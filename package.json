@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "braces": "^3.0.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-html-table-to-excel": "^2.0.0",
     "react-qr-reader": "^2.2.1",
     "react-scripts": "2.1.8",

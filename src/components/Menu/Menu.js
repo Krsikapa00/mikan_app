@@ -79,7 +79,7 @@ class Menu extends React.Component {
             if (adminlist[0]) {
                 adminready = (
                     <div>
-                        <AdminLastpunch adminlist={this.state.adminlist} />
+                        <AdminLastpunch adminlist={adminlist} />
                     </div>
                 )
             }
