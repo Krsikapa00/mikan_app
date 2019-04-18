@@ -34,6 +34,14 @@ class Adminlastpunch  extends React.Component {
             } 
             }else {
                console.log('Something went wrong') 
+               return {
+                id: 'N/A',
+                name: data.name,
+                date: 'N/A',
+                location: 'N/A',
+                time: 'N/A',
+                inout: 'N/A'
+            } 
             }
         }) 
         
@@ -48,6 +56,7 @@ class Adminlastpunch  extends React.Component {
 
     render() {
         const { adminarr } = this.state;
+        console.log(adminarr);
         if (adminarr[0]){
                 return ( 
                     <div className={'overflow-x-auto overflow-y-hidden nowrap '}>

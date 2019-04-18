@@ -58,7 +58,8 @@ class PunchForm extends React.Component {
                 body: JSON.stringify({
                     id: this.props.user.id,
                     location: this.state.locationcode,
-                    in_out: this.props.in_out
+                    in_out: this.props.in_out,
+                    locationname: this.state.location
                 })
             })
             .then(response => response.json())
