@@ -48,10 +48,15 @@ class PunchForm extends React.Component {
         const date = (`${today.getFullYear()}/${(today.getMonth()+1)}/${today.getDate()}`);
         return date;
     }
-
+    getTime = () => {
+        const today = new Date();
+        const date = (`${today.getHours()}:${(today.getMinutes())}:${today.getSeconds()}`);
+        return date;
+    }
     onRouteChange = () => {
         if (this.state.location !== ''){
-            
+            const date = this.getDate();
+            const time = this.getTime();
             fetch('https://mikan-app-api.herokuapp.com/recordpunch', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -59,7 +64,10 @@ class PunchForm extends React.Component {
                     id: this.props.user.id,
                     location: this.state.locationcode,
                     in_out: this.props.in_out,
-                    locationname: this.state.location
+                    locationname: this.state.location,
+                    date: date,
+                    time: time
+
                 })
             })
             .then(response => response.json())
