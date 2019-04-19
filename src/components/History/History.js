@@ -105,7 +105,7 @@ class History extends React.Component {
                                     <tr className='' >
                                         <td className="">{data.location}</td>
                                         <td  className="">{data.inout}</td>
-                                        <td  className="">{data.date.substring(0,1)}</td>
+                                        <td  className="">{data.date.substring(0,10)}</td>
                                         <td  className="">{data.time.substring(0,8)}</td>
                                     </tr>
                                 )
