@@ -7,6 +7,7 @@ import Users from './components/Users/Users';
 import History from './components/History/History';
 import Locations from './components/Locations/Locations';
 import './App.css';
+import Manualpunch from './components/Manualpunch/Manualpunch';
 
 class App extends Component {
   constructor(){
@@ -86,7 +87,11 @@ class App extends Component {
                             :(
                               route === 'editlocations'
                                 ?<Locations user={user} onRouteChange={this.onRouteChange}/>
+                                :(
+                                  route === 'manualpunch'
+                                ?<Manualpunch user={user}  />
                                 :<div>YOU MESSED UP</div>
+                                )
                             )
                           
                       )

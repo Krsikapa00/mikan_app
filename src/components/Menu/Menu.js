@@ -70,7 +70,10 @@ class Menu extends React.Component {
 
         if (user.admin){
             admin = (
-                <div>                
+                <div> 
+                
+                    <Submitbtn className='w' value="Manual Punch" onClick={() => onRouteChange('manualpunch')} />  
+
                     <Submitbtn className='w' value="Edit Users" onClick={() => onRouteChange('editusers')} />
               
                     <Submitbtn className='w' value="Locations" onClick={() => onRouteChange('editlocations')} />

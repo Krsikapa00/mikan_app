@@ -7,7 +7,7 @@ const Submitbtn = (props) => {
         <div className={`mv3 ${props.divclass}`}>
             <input
             id={props.id}
-            className={`${props.className} b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 `}
+            className={`${props.className} b pv2 input-reset ba b--black bg-transparent grow pointer `}
             type="button" 
             value={props.value}
             onClick={props.onClick}

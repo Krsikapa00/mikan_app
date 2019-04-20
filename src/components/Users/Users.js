@@ -78,13 +78,16 @@ class EditUsers extends React.Component {
                                                     <Submitbtn 
                                                         value="Edit" 
                                                         onClick={() =>
-                                                            onRouteChange("edit", data)} />
+                                                            onRouteChange("edit", data)}
+                                                        className='pa4'
+                                                             />
                                                 </td>
                                                 <td key={'deleteuser'}>
                                                     <Submitbtn  
                                                         value="Delete" 
                                                         onClick={() =>
-                                                            onRouteChange("delete", data)} />
+                                                            onRouteChange("delete", data)}
+                                                            className='pa4' />
                                                 </td>
                                             </tr>
                                         )

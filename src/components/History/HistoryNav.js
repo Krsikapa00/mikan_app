@@ -1,4 +1,5 @@
 import React from 'react';
+import Submitbtn from '../Submitbtn';
 
 
 const HistoryNav = ({ user, adminlist, getFilteredHistory, username }) => {
@@ -17,7 +18,7 @@ const HistoryNav = ({ user, adminlist, getFilteredHistory, username }) => {
     return (
         <div className='flex justify-center mb3 bb table-cont '> 
             <div id='select-user' className='ssbtn m4 flex w-20 justify-center '> 
-                <select id='select_user'className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
+                <select id='select_user' className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
                     
                     { user.admin === true
                     ?(
@@ -42,11 +43,10 @@ const HistoryNav = ({ user, adminlist, getFilteredHistory, username }) => {
                 <input className='b ba b--black bg-transparent pointer ssftn5 dib hover-bg-black hover-white w-100' type="date" id="end" name="search-end" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
             </div>
             <div className='w-20 m4 flex '>
-                <input 
-                    type="submit" 
+                <Submitbtn 
                     id="search" 
                     value='Search User History'
-                    className="b  sspd pv2 input-reset ba b--black bg-transparent grow pointer ssftn5 " 
+                    className="sspd ssftn5 " 
                     onClick={refresh_table}
                     />
             </div>

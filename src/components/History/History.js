@@ -1,7 +1,8 @@
 import React from 'react';
 import './History.css';
-import ReactToExcel from 'react-html-table-to-excel';
 import HistoryNav from './HistoryNav';
+import Submitbtn from '../Submitbtn'
+import Excelexport from './Excelexport';
 
 class History extends React.Component {
     constructor(){
@@ -113,13 +114,9 @@ class History extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                <ReactToExcel
-                    className="b textc mt4 mb4 sspd pv2 input-reset ba b--black bg-transparent grow pointer f6 dib w-20 center" 
-                    table='historyTable'
-                    filename={`${this.state.searchedusername} History File`}
-                    sheet='Sheet 1'
-                    buttonText='Export History'
-                    />
+                
+                <Submitbtn value='Export' onClick={() => Excelexport(document.getElementById('historyTable'), this.state.searchedusername)} />
+
             </div>
         )
     }

@@ -50,21 +50,19 @@ const Editus = ({ target, onReload }) => {
     
     return(
         <div>
-        <main className="pa4 black-80">
-            <form className="measure center">
-                <div id="sign_up" className="ba b--transparent ph0 mh0">
-                    <label className="f4 fw6 ph0 mh0">{`Edit ${target.name}`}</label>
+        <article className="br3 ba b--black-10 mv4 w-100 mw6 shadow-5 center">
+            <main className="pa4 black-80">
+                <form className="measure center">
+                    <legend className="f1 fw6 ph0 mh0 center bb">{`Edit ${target.name}`}</legend>
                     <Inputbar label='Name' type="text" id="newname" placeholder= "Updated name" />
 
                     <Inputbar label='Password/Code' type="password" id="newpassword" placeholder= "Updated password/code" />
 
                     <label className="pa0 ma0 lh-copy f6 pointer"><input id='newcheck' type="checkbox" />Admin User?</label>
-                </div>
-                <div className="">
-                    <Submitbtn value="Update" onClick={onUpdate} />
-                </div>
-            </form>
-        </main>     
+                </form>
+                        <Submitbtn value="Update" onClick={onUpdate} className='w-30'/>
+            </main> 
+        </article>    
     </div>
     )
 }

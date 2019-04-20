@@ -9,9 +9,7 @@ class Adminlastpunch  extends React.Component {
         }
     }
 
-
     getAdminLastPunch = async (userarr) => {
-        
         const promises = userarr.map(async data => {
             const response = await fetch(`https://mikan-app-api.herokuapp.com/latestpunch`, {
                 method: 'POST',
@@ -21,7 +19,6 @@ class Adminlastpunch  extends React.Component {
                 })
             }).then(resp => resp.json())
             .catch(err => console.log(err))
-
 
             if (response.id){
             return {
@@ -44,7 +41,6 @@ class Adminlastpunch  extends React.Component {
             } 
             }
         }) 
-        
         const results = await Promise.all(promises);
         return results;
     }
@@ -73,7 +69,6 @@ class Adminlastpunch  extends React.Component {
                                     </article> 
                                 )
                             })}
-                        
                     </div>
                 ) 
         }

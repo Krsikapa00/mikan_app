@@ -84,9 +84,6 @@ class PunchForm extends React.Component {
             .catch(err => console.log(err));
         
     }}
-    // componentDidMount() {
-    //     this.setState({route:'punch'})
-    // }
 
     render() {
         const { in_out } = this.props;
@@ -95,21 +92,24 @@ class PunchForm extends React.Component {
         if (this.state.route === 'punch') {
             return(
                 <div>
-                    <QrReader
-                        className = 'center'
-                        delay={200}
-                        onError={this.handleError}
-                        onScan={this.handleScan}
-                        style={{ width: '35%' }}
-                    />
-                    <div className='fw6 lh-copy f3' >
-                        <label className="db">{`Place: ${this.state.location}`}</label>
-                        <label className="db">{`User: ${this.props.user.name}`} </label>
-                        <label className="db">{`Date: ${curDate}`}</label>
-                        <label className="db">{`In/Out: ${in_out}`}</label>
-                    </div>
-                    <Submitbtn id="submit" value="Punch" onClick={this.onRouteChange}/>
-                    
+                    <article className="br3 ba b--black-10 mv4 w-80 mw7 shadow-5 center">
+                        <main className="pa4 black-80">
+                            <QrReader
+                                className = 'center'
+                                delay={200}
+                                onError={this.handleError}
+                                onScan={this.handleScan}
+                                style={{ width: '%' }}
+                            />
+                            <div className='fw6 lh-copy f3 bt ma3 pa4' >
+                                <label className="db">{`Place: ${this.state.location}`}</label>
+                                <label className="db">{`User: ${this.props.user.name}`} </label>
+                                <label className="db">{`Date: ${curDate}`}</label>
+                                <label className="db">{`In/Out: ${in_out}`}</label>
+                            </div>
+                            <Submitbtn id="submit" value="Punch" className='w-30' onClick={this.onRouteChange}/>
+                        </main>
+                    </article>
                 </div>    
             )
         } else if (this.state.route === 'recipt') {

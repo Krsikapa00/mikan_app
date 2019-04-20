@@ -88,7 +88,8 @@ class Locations extends React.Component {
                                                     <Submitbtn 
                                                         value="Edit Location" 
                                                         onClick={() =>
-                                                            onRouteChange("edit", data)} />
+                                                            onRouteChange("edit", data)}
+                                                        className='pa3' />
                                                 </td>
                                             
                                                 <td key={'deletelocation'}>

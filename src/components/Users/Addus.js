@@ -57,19 +57,24 @@ class Addus extends React.Component{
     
     return (
         <div>
-            <main className="pa4 black-80">
-                <form className="measure center">
-                    <div id="sign_up" className="ba b--transparent ph0 mh0">
-                        <label className="f4 fw6 ph0 mh0">Register</label>
-                        <Inputbar label='Name' type="text" id="Name" placeholder= "New users name" onChange={this.onNameChange} />
-                        <Inputbar label='Password' type="password" id="password" placeholder= "New users password" onChange={this.onPasswordChange} />
+            <article className="br3 ba b--black-10 mv4 w-100 mw6 shadow-5 center">
+                <main className="pa4 black-80">
+                    <div className="measure center">
+                        <form id="sign_up" className="ba b--transparent ph0 mh0">
+                            <legend className="f1 fw6 ph0 mh0 center bb">Register</legend>
+                            
+                            
+                            <Inputbar label='Name' type="text" id="Name" placeholder= "New users name" onChange={this.onNameChange} />
+                            <Inputbar label='Password' type="password" id="password" placeholder= "New users password" onChange={this.onPasswordChange} />
+                            
+                            <label className="pa0 ma0 lh-copy f6 pointer"><input id='checkbox' type="checkbox" onClick={() => this.onAdminChange(this)}/> Admin User?</label>
+                            
+                            <Submitbtn value="Register User" onClick={this.onRegister} className='w-30'/>
                         
-                        <label className="pa0 ma0 lh-copy f6 pointer"><input id='checkbox' type="checkbox" onClick={() => this.onAdminChange(this)}/> Admin User?</label>
+                        </form>
                     </div>
-                    <Submitbtn value="Register User" onClick={this.onRegister} />
-                   
-                </form>
-            </main>     
+                </main>   
+            </article>  
         </div>
     
     )
