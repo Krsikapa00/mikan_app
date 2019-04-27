@@ -1,0 +1,93 @@
+.App {
+  text-align: center;
+}
+
+.bg-lavender {
+  background: rgb(158, 128, 255)
+}
+
+.lastpunch {
+  width: 300px;
+}
+
+.w {
+  width: 80%;
+}
+
+.center-1 {
+  display: flex;
+  justify-content: center;
+}
+
+.textc {
+  text-align: -webkit-center;
+}
+
+.table-cont{
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+.m4 {
+  margin: 2rem;
+}
+
+.ssftn5 {
+  font-size: 1rem;
+} 
+
+.sspd {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} 
+
+.ssbtn {
+  width:20%;
+  min-width: 15%;
+}
+
+
+td, th {
+  text-align:center;
+}
+
+table {
+  table-layout: auto;
+  
+}
+
+@media
+only screen and (max-width: 900px)
+{
+  table { 
+    border-spacing:px;
+  }
+
+  tr {
+     border: 2px solid rgb(0, 0, 0); 
+    } 
+
+  .table-cont{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto; 
+  }
+
+  .m4 {
+    margin: 2.5%;
+  }
+  
+  .ssftn5 {
+    font-size: 0.5rem;
+  } 
+
+  .sspd {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  } 
+
+  
+
+ }
+
