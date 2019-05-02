@@ -18,15 +18,15 @@ class Locations extends React.Component {
         this.setState({route: route, singleloc:user})
     }
     
-    onReload = (route) => {
+    onReload = () => {
         this.setState({route: 'main', singleuser:{}, userarr: []})
         this.loadlocarr();
-        this.props.onRouteChange(route); 
+        this.props.onRouteChange('editlocations'); 
     }
 
     loadlocarr = () =>{
 
-        fetch(`https://mikan-app-api.herokuapp.com/locationsload`, {
+        fetch(`http://localhost:3000/locationsload`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })

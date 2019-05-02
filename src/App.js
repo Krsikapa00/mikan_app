@@ -77,7 +77,7 @@ class App extends Component {
                 />
               :(
                 route === 'history'
-                  ?<History user={user} />
+                  ?<History user={user} onRouteChange={this.onRouteChange} />
                   :(
                     route === 'signin'
                       ?<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>

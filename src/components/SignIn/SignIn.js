@@ -21,7 +21,7 @@ class SignIn extends React.Component{
     
 
     onSubmitSignIn = () => { 
-        fetch('https://mikan-app-api.herokuapp.com/signin', {
+        fetch('http://localhost:3000/signin', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -47,7 +47,7 @@ class SignIn extends React.Component{
            
             <article className="br3 ba b--black-10 mv4 w-100 mw6 shadow-5 center">
                 <main className="pa4 black-80">
-                    <div className="measure">
+                    <div className="measure center">
                         <form id="sign_up" className="ba b--transparent ph0 mh0">
                             <legend className="f1 fw6 ph0 mh0 center bb">Sign In</legend>
 

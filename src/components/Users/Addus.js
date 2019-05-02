@@ -33,7 +33,7 @@ class Addus extends React.Component{
     }
 
     onRegister = () => { 
-        fetch('https://mikan-app-api.herokuapp.com/userregister', {
+        fetch('http://localhost:3000/userregister', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -63,8 +63,8 @@ class Addus extends React.Component{
                         <form id="sign_up" className="ba b--transparent ph0 mh0">
                             <legend className="f1 fw6 ph0 mh0 center bb">Register</legend>
                             
-                            
                             <Inputbar label='Name' type="text" id="Name" placeholder= "New users name" onChange={this.onNameChange} />
+                            
                             <Inputbar label='Password' type="password" id="password" placeholder= "New users password" onChange={this.onPasswordChange} />
                             
                             <label className="pa0 ma0 lh-copy f6 pointer"><input id='checkbox' type="checkbox" onClick={() => this.onAdminChange(this)}/> Admin User?</label>

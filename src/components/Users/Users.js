@@ -18,14 +18,14 @@ class EditUsers extends React.Component {
         this.setState({route: route, singleuser:user})
     }
     
-    onReload = (route) => {
+    onReload = () => {
         this.setState({route: 'main', singleuser:{}, userarr: []})
         this.editUsersArr();
-        this.props.onRouteChange(route);
+        this.props.onRouteChange('editusers');
     }
 
     editUsersArr = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/userseditlist`, {
+        fetch(`http://localhost:3000/userseditlist`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

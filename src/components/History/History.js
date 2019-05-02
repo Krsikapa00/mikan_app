@@ -3,6 +3,7 @@ import './History.css';
 import HistoryNav from './HistoryNav';
 import Submitbtn from '../Submitbtn'
 import Excelexport from './Excelexport';
+import Deleteform from '../Deleteform';
 
 class History extends React.Component {
     constructor(){
@@ -10,7 +11,9 @@ class History extends React.Component {
         this.state = {
             adminlist: [],
             historyarray: [],
-            searchedusername: '',
+            searchedusername:'',
+            route: 'main',
+            deletedPunch: {},
         }
     }
     
@@ -18,8 +21,14 @@ class History extends React.Component {
         this.setState({searchedusername:name})
     }
 
+    onReload = () => {
+        this.setState({route: 'main', deletedPunch:{}, historyarray: []})
+        this.historyarr();
+        this.props.onRouteChange('history');
+    }
+
     getadminlist = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
+        fetch(`http://localhost:3000/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -35,7 +44,7 @@ class History extends React.Component {
     }
 
     historyarr = () => {
-        fetch(`https://mikan-app-api.herokuapp.com/history`, {
+        fetch(`http://localhost:3000/history`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -50,7 +59,7 @@ class History extends React.Component {
     }
 
     getFilteredHistory = (id, start, end) => {
-        fetch(`https://mikan-app-api.herokuapp.com/filteredhistory`, {
+        fetch(`http://localhost:3000/filteredhistory`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -71,54 +80,81 @@ class History extends React.Component {
         .catch(err => console.log(err));
     }
 
+    deletePunch = (punch) => {
+        punch['name'] = this.state.searchedusername + "'s punch";
+        this.setState({deletedPunch: punch, route:'delete'})
+        console.log(punch);
+    }
+
     componentDidMount() {
         if(this.props.user.admin){
             this.getadminlist();
         }
         this.historyarr();
-        // console.log(this.state.historyarray)
         this.setState({searchedusername: this.props.user.name})
     }
 
     render() {
         const { user } = this.props;
-        const { historyarray, adminlist } = this.state
-        return(
-            <div className="shadow-5 w-80 center">
-                <div> 
-                    
-                    <HistoryNav user={user} adminlist={adminlist} getFilteredHistory={this.getFilteredHistory} username={this.username} />
-                </div>
-                <div className="mt4">
-                    <table className="table-cont" cellSpacing="0" id='historyTable'>
-                        <thead className=''>
-                            <tr className=''>
-                                <th className=" ">Location</th>
-                                <th className=" ">In/Out</th>
-                                <th className=" ">Date</th>
-                                <th className=" ">Time</th>
-                            </tr>
-                        </thead>
-                        <tbody className="">
-                            {historyarray.map(function(data, i){
-                                return(
-                                    //NEED TO ADD KEY VALUES THAT ARE UNIQUE
-                                    <tr className='' >
-                                        <td className="">{data.location}</td>
-                                        <td  className="">{data.inout}</td>
-                                        <td  className="">{data.date.substring(0,10)}</td>
-                                        <td  className="">{data.time.substring(0,8)}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                
-                <Submitbtn value='Export' onClick={() => Excelexport(document.getElementById('historyTable'), this.state.searchedusername)} />
+        const { historyarray, adminlist, route, deletedPunch } = this.state
+        const { deletePunch, onReload} = this;
 
-            </div>
-        )
+        
+        if (route === 'main') {
+                
+            return(
+                <div className="shadow-5 w-80 center">
+                    <div> 
+                        
+                        <HistoryNav user={user} adminlist={adminlist} getFilteredHistory={this.getFilteredHistory} username={this.username} />
+                    </div>
+                    <div className="mt4">
+                        <table className="table-cont" cellSpacing="0" id='historyTable'>
+                            <thead className=''>
+                                <tr className=''>
+                                    <th className=" ">Location</th>
+                                    <th className=" ">In/Out</th>
+                                    <th className=" ">Date</th>
+                                    <th className=" ">Time</th>
+                                    {user.admin === true
+                                    ?<th className=" ">Delete ?</th>
+                                    :<div></div>}
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                {historyarray.map(function(data, i){
+                                    return(
+                                        //NEED TO ADD KEY VALUES THAT ARE UNIQUE
+                                        <tr className='' >
+                                            <td className="">{data.location}</td>
+                                            <td  className="">{data.inout}</td>
+                                            <td  className="">{data.date.substring(0,10)}</td>
+                                            <td  className="">{data.time.substring(0,8)}</td>
+                                            {user.admin === true
+                                                ?<td key={'delete punch'}>
+                                                    <Submitbtn  
+                                                        value="Delete" 
+                                                        onClick={() =>
+                                                            deletePunch(data)}
+                                                            className='pa4' />
+                                                </td>                                            
+                                                :<div></div>}
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <Submitbtn value='Export' onClick={() => Excelexport(document.getElementById('historyTable'), this.state.searchedusername)} />
+
+                </div>
+            )
+        } else if (route === 'delete') {
+            return (
+                <Deleteform route={'punchdelete'} target={deletedPunch} onReload={onReload} />
+                )
+        }
     }
 }
 

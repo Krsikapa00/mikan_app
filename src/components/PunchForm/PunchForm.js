@@ -18,7 +18,7 @@ class PunchForm extends React.Component {
     
     handleScan = (data) => {
         if (data !== null) {
-            fetch('https://mikan-app-api.herokuapp.com/locationscheck', {
+            fetch('http://localhost:3000/locationscheck', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -57,7 +57,7 @@ class PunchForm extends React.Component {
         if (this.state.location !== ''){
             const date = this.getDate();
             const time = this.getTime();
-            fetch('https://mikan-app-api.herokuapp.com/recordpunch', {
+            fetch('http://localhost:3000/recordpunch', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
