@@ -4,7 +4,7 @@ const Inputbar = (props) => {
 
 
     return(
-        <div className="w-70 m4 center">
+        <div className= {` w-70 m4 center `}>
             <label className="b ssftn5" >{props.label}</label>
             <input
             id={props.id}

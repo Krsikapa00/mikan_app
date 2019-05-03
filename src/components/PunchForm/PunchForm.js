@@ -54,16 +54,17 @@ class PunchForm extends React.Component {
         return date;
     }
     onRouteChange = () => {
+        const inout = this.props.in_out;
         if (this.state.location !== ''){
             const date = this.getDate();
             const time = this.getTime();
-            fetch('http://localhost:3000/recordpunch', {
+            fetch(`http://localhost:3000/recordpunch${inout}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: this.props.user.id,
                     location: this.state.locationcode,
-                    in_out: this.props.in_out,
+                    
                     locationname: this.state.location,
                     date: date,
                     time: time

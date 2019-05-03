@@ -83,7 +83,7 @@ class History extends React.Component {
     deletePunch = (punch) => {
         punch['name'] = this.state.searchedusername + "'s punch";
         this.setState({deletedPunch: punch, route:'delete'})
-        console.log(punch);
+        // console.log(punch);
     }
 
     componentDidMount() {
@@ -113,9 +113,10 @@ class History extends React.Component {
                             <thead className=''>
                                 <tr className=''>
                                     <th className=" ">Location</th>
-                                    <th className=" ">In/Out</th>
-                                    <th className=" ">Date</th>
-                                    <th className=" ">Time</th>
+                                    <th className=" ">In Date</th>
+                                    <th className=" ">InTime</th>
+                                    <th className=" ">Out Date</th>
+                                    <th className=" ">Out Time</th>
                                     {user.admin === true
                                     ?<th className=" ">Delete ?</th>
                                     :<div></div>}
@@ -123,13 +124,18 @@ class History extends React.Component {
                             </thead>
                             <tbody className="">
                                 {historyarray.map(function(data, i){
+                                    if (data.out_date === null){
+                                        data.out_date = '';
+                                        data.out_time = '';
+                                    }
                                     return(
                                         //NEED TO ADD KEY VALUES THAT ARE UNIQUE
                                         <tr className='' >
                                             <td className="">{data.location}</td>
-                                            <td  className="">{data.inout}</td>
-                                            <td  className="">{data.date.substring(0,10)}</td>
-                                            <td  className="">{data.time.substring(0,8)}</td>
+                                            <td  className="">{data.in_date.substring(0,10)}</td>
+                                            <td  className="">{data.in_time.substring(0,8)}</td>
+                                            <td  className="">{data.out_date.substring(0,10)}</td>
+                                            <td  className="">{data.out_time.substring(0,8)}</td>
                                             {user.admin === true
                                                 ?<td key={'delete punch'}>
                                                     <Submitbtn  

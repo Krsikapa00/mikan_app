@@ -51,23 +51,26 @@ class Manualpunch extends React.Component {
         const user = document.getElementById('select_user').value.split(",");
         //Location variable is an array with place 0 being code and 1 being name
         const location = document.getElementById('select_location').value.split(",");
-        const in_out = document.getElementById('select_inout').value; 
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
+        const in_date = document.getElementById('in_date').value;
+        const in_time = document.getElementById('in_time').value;
+        const out_date = document.getElementById('out_date').value;
+        const out_time = document.getElementById('out_time').value;
+        console.log(user[0])
 
-        if (!user || !in_out || !date || !time || !location) {
+        if (!user  || !in_date || !in_time || !location) {
             console.log('Incorrect submission')
         } else {
-            fetch('http://localhost:3000/recordpunch', {
+            fetch('http://localhost:3000/recordpunchmanual', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: user[0],
                     location: location[0],
-                    in_out: in_out,
                     locationname: location[1],
-                    date: date,
-                    time: time
+                    in_date: in_date,
+                    in_time: in_time,
+                    out_date: out_date,
+                    out_time: out_time
 
                 })
             })
@@ -120,7 +123,7 @@ class Manualpunch extends React.Component {
                                     </select>
                                 </div>
                                 <div className='m4 w-70 center '>
-                                    <label className='b ssftn5' >Location </label>
+                                    <label className='b ssftn5' >Locaout_timetion </label>
                                     <select id='select_location' className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
                                         {
                                             locationarr.map(function(data,i){
@@ -132,17 +135,12 @@ class Manualpunch extends React.Component {
                                         }
                                     </select>
                                 </div>
-                                <div className='m4 w-70 center '>
-                                    <label className='b ssftn5' >In or Out? </label>
-                                    <select id='select_inout' className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
-                                        <option className='pa2 ' value={'In'}>IN</option>
-                                        <option className='pa2 ' value={'Out'}>OUT</option>
-                                    </select>
-                                </div>
+                                
+                                <Inputbar label='In Date' id='in_date' type='date' />
+                                <Inputbar label='In Time' id='in_time' type='time' />
 
-                                <Inputbar label='Date' id='date' type='date' />
-                    
-                                <Inputbar label='Time' id='time' type='time' />
+                                <Inputbar label='Out Date' id='out_date' type='date' />
+                                <Inputbar label='Out Time' id='out_time' type='time' />
 
                                 <Submitbtn id='submit' value='Add Punch' onClick={this.onRouteChange} className='w-30' />
                             </form>

@@ -20,7 +20,7 @@ const Deleteform = ({ route, target , onReload }) => {
     }
 
     const submitDelete = (data) => {
-        console.log(data);
+        // console.log(data);
         fetch(`http://localhost:3000/${route}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -30,12 +30,12 @@ const Deleteform = ({ route, target , onReload }) => {
         })
         .then(response => response.json())
         .then(updateduser =>{
-            console.log(updateduser)
+            // console.log(updateduser)
             onReload();
         })
         .catch(err => console.log(err));
     }
-    console.log(target)
+    // console.log(target)
     return (
         
         <div className=''>  

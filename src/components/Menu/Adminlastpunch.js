@@ -24,20 +24,22 @@ class Adminlastpunch  extends React.Component {
             return {
                 id: response.id,
                 name: data.name,
-                date: response.date,
+                in_date: response.in_date,
                 location: response.location,
-                time: response.time,
-                inout: response.inout
+                in_time: response.in_time,
+                out_time: response.out_time,
+                out_date: response.out_date
             } 
             }else {
                console.log('Something went wrong') 
                return {
                 id: 'N/A',
                 name: data.name,
-                date: 'N/A',
+                in_date: 'N/A',
                 location: 'N/A',
-                time: 'N/A',
-                inout: 'N/A'
+                in_time: 'N/A',
+                out_time: 'N/A',
+                out_date: 'N/A' 
             } 
             }
         }) 
