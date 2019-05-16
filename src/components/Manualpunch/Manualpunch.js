@@ -16,7 +16,7 @@ class Manualpunch extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`http://localhost:3000/loadusers`, {
+        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -26,13 +26,16 @@ class Manualpunch extends React.Component {
     })
     .then(response => response.json())
     .then(usersarray =>{
+        console.log(usersarray)
         this.setState({adminlist: usersarray});
     })
     .catch(err => console.log(err));
     }
 
+    
+
     loadlocarr = () =>{
-        fetch(`http://localhost:3000/locationsload`, {
+        fetch(`https://mikan-app-api.herokuapp.com/locationsload`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -47,6 +50,12 @@ class Manualpunch extends React.Component {
         .catch(err => console.log(err));
     }
 
+    getActualDate = (punch_Date) => {
+        let actual_date = new Date(punch_Date);
+        actual_date.setDate(actual_date.getDate() + 1)
+        return actual_date;
+    }
+
     onRouteChange = () => {
         const user = document.getElementById('select_user').value.split(",");
         //Location variable is an array with place 0 being code and 1 being name
@@ -55,12 +64,13 @@ class Manualpunch extends React.Component {
         const in_time = document.getElementById('in_time').value;
         const out_date = document.getElementById('out_date').value;
         const out_time = document.getElementById('out_time').value;
-        console.log(user[0])
+        const actual_in_date = this.getActualDate(in_date);
+        const actual_out_date = this.getActualDate(out_date);
 
         if (!user  || !in_date || !in_time || !location) {
             console.log('Incorrect submission')
         } else {
-            fetch('http://localhost:3000/recordpunchmanual', {
+            fetch('https://mikan-app-api.herokuapp.com/recordpunchmanual', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -70,7 +80,9 @@ class Manualpunch extends React.Component {
                     in_date: in_date,
                     in_time: in_time,
                     out_date: out_date,
-                    out_time: out_time
+                    out_time: out_time,
+                    actual_in_date: actual_in_date,
+                    actual_out_date: actual_out_date
 
                 })
             })
@@ -85,12 +97,12 @@ class Manualpunch extends React.Component {
                     console.log('punch')
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log("err"));
 
         }
 
 
-        console.log(user[1])
+        //console.log(user[1])
     }
 
     componentDidMount() {

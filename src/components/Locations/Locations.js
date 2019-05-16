@@ -26,7 +26,7 @@ class Locations extends React.Component {
 
     loadlocarr = () =>{
 
-        fetch(`http://localhost:3000/locationsload`, {
+        fetch(`https://mikan-app-api.herokuapp.com/locationsload`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
