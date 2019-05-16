@@ -18,7 +18,7 @@ class PunchForm extends React.Component {
     
     handleScan = (data) => {
         if (data !== null) {
-            fetch('http://localhost:3000/locationscheck', {
+            fetch('https://mikan-app-api.herokuapp.com/locationscheck', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -48,24 +48,33 @@ class PunchForm extends React.Component {
         const date = (`${today.getFullYear()}/${(today.getMonth()+1)}/${today.getDate()}`);
         return date;
     }
+    
+    getActualDate = () => {
+        const today = new Date();
+        const date = (`${today.getFullYear()}/${(today.getMonth()+1)}/${today.getDate()+1}`);
+        return date;
+    }
+
     getTime = () => {
         const today = new Date();
         const date = (`${today.getHours()}:${(today.getMinutes())}:${today.getSeconds()}`);
         return date;
     }
     onRouteChange = () => {
+        const inout = this.props.in_out;
         if (this.state.location !== ''){
             const date = this.getDate();
+            const actual_date = this.getActualDate();
             const time = this.getTime();
-            fetch('http://localhost:3000/recordpunch', {
+            fetch(`https://mikan-app-api.herokuapp.com/recordpunch${inout}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: this.props.user.id,
                     location: this.state.locationcode,
-                    in_out: this.props.in_out,
                     locationname: this.state.location,
                     date: date,
+                    actual_date: actual_date,
                     time: time
 
                 })

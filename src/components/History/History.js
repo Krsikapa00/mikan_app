@@ -28,7 +28,7 @@ class History extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`http://localhost:3000/loadusers`, {
+        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -44,7 +44,7 @@ class History extends React.Component {
     }
 
     historyarr = () => {
-        fetch(`http://localhost:3000/history`, {
+        fetch(`https://mikan-app-api.herokuapp.com/history`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -59,7 +59,7 @@ class History extends React.Component {
     }
 
     getFilteredHistory = (id, start, end) => {
-        fetch(`http://localhost:3000/filteredhistory`, {
+        fetch(`https://mikan-app-api.herokuapp.com/filteredhistory`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -83,7 +83,7 @@ class History extends React.Component {
     deletePunch = (punch) => {
         punch['name'] = this.state.searchedusername + "'s punch";
         this.setState({deletedPunch: punch, route:'delete'})
-        console.log(punch);
+        // console.log(punch);
     }
 
     componentDidMount() {
@@ -112,10 +112,16 @@ class History extends React.Component {
                         <table className="table-cont" cellSpacing="0" id='historyTable'>
                             <thead className=''>
                                 <tr className=''>
+                                    <th className=" ">User ID</th>
                                     <th className=" ">Location</th>
-                                    <th className=" ">In/Out</th>
-                                    <th className=" ">Date</th>
-                                    <th className=" ">Time</th>
+                                    <th colSpan='' className=" ">In Date</th>
+                                    <th className=" ">InTime</th>
+                                    <th className=" ">Out Date</th>
+                                    <th className=" ">Out Time</th>
+                                    <th className=" ">Hours Worked</th>
+                                    <th style={{display:"none"}} className=" ">Actual In Date</th>
+                                    <th style={{display:"none"}} className=" ">Actual Out Date</th>
+                                    
                                     {user.admin === true
                                     ?<th className=" ">Delete ?</th>
                                     :<div></div>}
@@ -123,13 +129,24 @@ class History extends React.Component {
                             </thead>
                             <tbody className="">
                                 {historyarray.map(function(data, i){
+                                    if (data.out_date === null){
+                                        data.out_date = '';
+                                        data.actual_out_date = '';
+                                        data.out_time = '';
+                                    }
                                     return(
                                         //NEED TO ADD KEY VALUES THAT ARE UNIQUE
                                         <tr className='' >
-                                            <td className="">{data.location}</td>
-                                            <td  className="">{data.inout}</td>
-                                            <td  className="">{data.date.substring(0,10)}</td>
-                                            <td  className="">{data.time.substring(0,8)}</td>
+                                            <td  className="">{data.id}</td>   
+                                            <td  className="">{data.location}</td>
+                                            <td  className="">{data.in_date.substring(0,10)}</td>
+                                            <td  className="">{data.in_time.substring(0,8)}</td>
+                                            <td  className="">{data.out_date.substring(0,10)}</td>
+                                            <td  className="">{data.out_time.substring(0,8)}</td>
+                                            <td  className="">{data.difference/60}</td>
+                                            <td  style={{display:"none"}} className="">{data.actual_in_date.substring(0,10)}</td>
+                                            <td  style={{display:"none"}} className="">{data.actual_out_date.substring(0,10)}</td>
+                                            
                                             {user.admin === true
                                                 ?<td key={'delete punch'}>
                                                     <Submitbtn  

@@ -40,7 +40,7 @@ const Editloc = ({ target, onReload }) => {
     }
 
     const submitUpdate = (data) => {
-        fetch(`http://localhost:3000/locationedit`, {
+        fetch(`https://mikan-app-api.herokuapp.com/locationedit`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(

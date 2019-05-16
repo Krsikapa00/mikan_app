@@ -14,7 +14,7 @@ class Menu extends React.Component {
     }
 
     getUserList(adminuser){
-        return fetch(`http://localhost:3000/loadusers`, {
+        return fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -32,7 +32,7 @@ class Menu extends React.Component {
     }
 
     getLastPunch = (user) => {
-        fetch(`http://localhost:3000/latestpunch`, {
+        fetch(`https://mikan-app-api.herokuapp.com/latestpunch`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

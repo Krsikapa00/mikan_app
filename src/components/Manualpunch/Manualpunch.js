@@ -16,7 +16,7 @@ class Manualpunch extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`http://localhost:3000/loadusers`, {
+        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -26,13 +26,16 @@ class Manualpunch extends React.Component {
     })
     .then(response => response.json())
     .then(usersarray =>{
+        console.log(usersarray)
         this.setState({adminlist: usersarray});
     })
     .catch(err => console.log(err));
     }
 
+    
+
     loadlocarr = () =>{
-        fetch(`http://localhost:3000/locationsload`, {
+        fetch(`https://mikan-app-api.herokuapp.com/locationsload`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -47,27 +50,39 @@ class Manualpunch extends React.Component {
         .catch(err => console.log(err));
     }
 
+    getActualDate = (punch_Date) => {
+        let actual_date = new Date(punch_Date);
+        actual_date.setDate(actual_date.getDate() + 1)
+        return actual_date;
+    }
+
     onRouteChange = () => {
         const user = document.getElementById('select_user').value.split(",");
         //Location variable is an array with place 0 being code and 1 being name
         const location = document.getElementById('select_location').value.split(",");
-        const in_out = document.getElementById('select_inout').value; 
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
+        const in_date = document.getElementById('in_date').value;
+        const in_time = document.getElementById('in_time').value;
+        const out_date = document.getElementById('out_date').value;
+        const out_time = document.getElementById('out_time').value;
+        const actual_in_date = this.getActualDate(in_date);
+        const actual_out_date = this.getActualDate(out_date);
 
-        if (!user || !in_out || !date || !time || !location) {
+        if (!user  || !in_date || !in_time || !location) {
             console.log('Incorrect submission')
         } else {
-            fetch('http://localhost:3000/recordpunch', {
+            fetch('https://mikan-app-api.herokuapp.com/recordpunchmanual', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: user[0],
                     location: location[0],
-                    in_out: in_out,
                     locationname: location[1],
-                    date: date,
-                    time: time
+                    in_date: in_date,
+                    in_time: in_time,
+                    out_date: out_date,
+                    out_time: out_time,
+                    actual_in_date: actual_in_date,
+                    actual_out_date: actual_out_date
 
                 })
             })
@@ -82,12 +97,12 @@ class Manualpunch extends React.Component {
                     console.log('punch')
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log("err"));
 
         }
 
 
-        console.log(user[1])
+        //console.log(user[1])
     }
 
     componentDidMount() {
@@ -120,7 +135,7 @@ class Manualpunch extends React.Component {
                                     </select>
                                 </div>
                                 <div className='m4 w-70 center '>
-                                    <label className='b ssftn5' >Location </label>
+                                    <label className='b ssftn5' >Locaout_timetion </label>
                                     <select id='select_location' className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
                                         {
                                             locationarr.map(function(data,i){
@@ -132,17 +147,12 @@ class Manualpunch extends React.Component {
                                         }
                                     </select>
                                 </div>
-                                <div className='m4 w-70 center '>
-                                    <label className='b ssftn5' >In or Out? </label>
-                                    <select id='select_inout' className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
-                                        <option className='pa2 ' value={'In'}>IN</option>
-                                        <option className='pa2 ' value={'Out'}>OUT</option>
-                                    </select>
-                                </div>
+                                
+                                <Inputbar label='In Date' id='in_date' type='date' />
+                                <Inputbar label='In Time' id='in_time' type='time' />
 
-                                <Inputbar label='Date' id='date' type='date' />
-                    
-                                <Inputbar label='Time' id='time' type='time' />
+                                <Inputbar label='Out Date' id='out_date' type='date' />
+                                <Inputbar label='Out Time' id='out_time' type='time' />
 
                                 <Submitbtn id='submit' value='Add Punch' onClick={this.onRouteChange} className='w-30' />
                             </form>

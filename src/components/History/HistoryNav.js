@@ -19,7 +19,7 @@ const HistoryNav = ({ user, adminlist, getFilteredHistory, username }) => {
         <div className='flex justify-center mb3 bb table-cont '> 
             <div id='select-user' className='ssbtn m4 flex w-20 justify-center '> 
                 <select id='select_user' className='w-100 hover-bg-black hover-white bg-transparent b ba b--black' >
-                    
+                    <option className='pa2' value={-1}> All</option>
                     { user.admin === true
                     ?(
                         adminlist.map(function(data,i){

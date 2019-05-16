@@ -11,7 +11,7 @@ class Adminlastpunch  extends React.Component {
 
     getAdminLastPunch = async (userarr) => {
         const promises = userarr.map(async data => {
-            const response = await fetch(`http://localhost:3000/latestpunch`, {
+            const response = await fetch(`https://mikan-app-api.herokuapp.com/latestpunch`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -24,20 +24,22 @@ class Adminlastpunch  extends React.Component {
             return {
                 id: response.id,
                 name: data.name,
-                date: response.date,
+                in_date: response.in_date,
                 location: response.location,
-                time: response.time,
-                inout: response.inout
+                in_time: response.in_time,
+                out_time: response.out_time,
+                out_date: response.out_date
             } 
             }else {
                console.log('Something went wrong') 
                return {
                 id: 'N/A',
                 name: data.name,
-                date: 'N/A',
+                in_date: 'N/A',
                 location: 'N/A',
-                time: 'N/A',
-                inout: 'N/A'
+                in_time: 'N/A',
+                out_time: 'N/A',
+                out_date: 'N/A' 
             } 
             }
         }) 

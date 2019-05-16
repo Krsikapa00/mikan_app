@@ -20,7 +20,7 @@ export default  (data, username) => {
           Title: 'Test',
           Subject: 'Test File',
           Author: "Nick",
-          CreatedDate: new Date(2019,4,19)
+          CreatedDate: new Date()
         };
         wb = XLSX.utils.table_to_book(data, {sheet: "Sheet Js"});
         
