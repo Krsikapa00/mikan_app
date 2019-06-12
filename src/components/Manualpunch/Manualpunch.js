@@ -16,7 +16,7 @@ class Manualpunch extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
+        fetch(`http://localhost:3000/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -35,7 +35,7 @@ class Manualpunch extends React.Component {
     
 
     loadlocarr = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/locationsload`, {
+        fetch(`http://localhost:3000/locationsload`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -70,11 +70,12 @@ class Manualpunch extends React.Component {
         if (!user  || !in_date || !in_time || !location) {
             console.log('Incorrect submission')
         } else {
-            fetch('https://mikan-app-api.herokuapp.com/recordpunchmanual', {
+            fetch('http://localhost:3000/recordpunchmanual', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: user[0],
+                    name:user[1],
                     location: location[0],
                     locationname: location[1],
                     in_date: in_date,

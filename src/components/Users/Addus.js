@@ -33,7 +33,7 @@ class Addus extends React.Component{
     }
 
     onRegister = () => { 
-        fetch('https://mikan-app-api.herokuapp.com/userregister', {
+        fetch('http://localhost:3000/userregister', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

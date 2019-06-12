@@ -26,7 +26,7 @@ class Locations extends React.Component {
 
     loadlocarr = () =>{
 
-        fetch(`https://mikan-app-api.herokuapp.com/locationsload`, {
+        fetch(`http://localhost:3000/locationsload`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -57,22 +57,21 @@ class Locations extends React.Component {
 
         if (route === 'main'){
             return(
-                <div>
-                    <div className='w-70 flex justify-end' style={{marginLeft:'auto', marginRight:'auto'}}>
+                <div className="shadow-5 w-80 center">
+                    <div className='w-70 flex justify-end ma1' style={{marginLeft:'auto', marginRight:'auto'}}>
                         <Submitbtn
                             value="Add Location" 
                             onClick={() =>
                                 onRouteChange("add", '')} />
                     </div>
-                    <div className='table-cont' > 
-                        
+                    <div className='mt4 scrollable-table db table-cont' > 
                         <table className="" cellSpacing="0" id='historyTable'>
                                 <thead align='' className='' >
                                     <tr className=''>
                                         <th className=" ">ID</th>
                                         <th className=" ">Location Name</th>
                                         <th className=" ">Location Code</th>
-                                        <th className=" ">In Use?</th>
+                                        <th className="">In Use?</th>
                                         <th colSpan='2' className=" ">Edit Locations</th>
                                     </tr>
                                 </thead>
@@ -103,7 +102,6 @@ class Locations extends React.Component {
                                     })}
                                 </tbody>
                             </table>
-                        
                     </div>
                 </div>
             )

@@ -10,7 +10,6 @@ const Lastpunch = ({punch}) => {
                     <h1 className="f4">Last Punch</h1>
                     <hr className="mw3 bb bw1 b--black-10" />
                 </div>
-                    <label className="db">{`Last Punch`}</label>
                     <Singlepunch punch={punch} />
             </article>
         )

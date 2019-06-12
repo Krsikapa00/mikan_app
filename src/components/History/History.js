@@ -28,7 +28,7 @@ class History extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
+        fetch(`http://localhost:3000/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -44,7 +44,7 @@ class History extends React.Component {
     }
 
     historyarr = () => {
-        fetch(`https://mikan-app-api.herokuapp.com/history`, {
+        fetch(`http://localhost:3000/history`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -59,7 +59,7 @@ class History extends React.Component {
     }
 
     getFilteredHistory = (id, start, end) => {
-        fetch(`https://mikan-app-api.herokuapp.com/filteredhistory`, {
+        fetch(`http://localhost:3000/filteredhistory`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -108,17 +108,18 @@ class History extends React.Component {
                         
                         <HistoryNav user={user} adminlist={adminlist} getFilteredHistory={this.getFilteredHistory} username={this.username} />
                     </div>
-                    <div className="mt4">
-                        <table className="table-cont" cellSpacing="0" id='historyTable'>
+                    <div className="mt4 scrollable-table db table-cont ">
+                        <table className="" cellSpacing="0" id='historyTable'>
                             <thead className=''>
                                 <tr className=''>
-                                    <th className=" ">User ID</th>
-                                    <th className=" ">Location</th>
-                                    <th colSpan='' className=" ">In Date</th>
-                                    <th className=" ">InTime</th>
-                                    <th className=" ">Out Date</th>
-                                    <th className=" ">Out Time</th>
-                                    <th className=" ">Hours Worked</th>
+                                    <th style={{display:"none"}} className=" ">User ID</th>
+                                    <th className="pa3">Name</th>
+                                    <th className="pa3">Location</th>
+                                    <th colSpan='' className="pa3">In Date</th>
+                                    <th className="pa3">InTime</th>
+                                    <th className="pa3">Out Date</th>
+                                    <th className="pa3">Out Time</th>
+                                    <th className="pa3">Hours Worked</th>
                                     <th style={{display:"none"}} className=" ">Actual In Date</th>
                                     <th style={{display:"none"}} className=" ">Actual Out Date</th>
                                     
@@ -137,7 +138,8 @@ class History extends React.Component {
                                     return(
                                         //NEED TO ADD KEY VALUES THAT ARE UNIQUE
                                         <tr className='' >
-                                            <td  className="">{data.id}</td>   
+                                            <td  style={{display:"none"}} className="">{data.id}</td>   
+                                            <td  className="">{data.name}</td>
                                             <td  className="">{data.location}</td>
                                             <td  className="">{data.in_date.substring(0,10)}</td>
                                             <td  className="">{data.in_time.substring(0,8)}</td>
@@ -160,7 +162,14 @@ class History extends React.Component {
                                     )
                                 })}
                             </tbody>
+                           
                         </table>
+                        <div className="w-80 center ma4 pa2 bt justify-between">
+                            <div className=" f3 flex " >Total Hours:</div>
+                            <div className=" f3 flex" >36</div>
+
+                        </div>
+                        
                     </div>
                     
                     <Submitbtn value='Export' onClick={() => Excelexport(document.getElementById('historyTable'), this.state.searchedusername)} />

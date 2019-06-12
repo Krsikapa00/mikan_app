@@ -25,7 +25,7 @@ class EditUsers extends React.Component {
     }
 
     editUsersArr = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/userseditlist`, {
+        fetch(`http://localhost:3000/userseditlist`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -49,15 +49,14 @@ class EditUsers extends React.Component {
         const { route, singleuser, userarr } = this.state;
         if (route === 'main'){
             return(
-                <div>
+                <div className="shadow-5 w-80 center">
                     <div className='w-70 flex justify-end' style={{marginLeft:'auto', marginRight:'auto'}}>
                         <Submitbtn
                             value="Register User" 
                             onClick={() =>
                                 onRouteChange("add", '')} />
                     </div>
-                    <div className='table-cont' > 
-                        
+                    <div className='mt4 scrollable-table db table-cont' >  
                         <table className="" cellSpacing="0" id='historyTable'>
                                 <thead align='' className='' >
                                     <tr className=''>
