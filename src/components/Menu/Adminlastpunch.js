@@ -11,7 +11,7 @@ class Adminlastpunch  extends React.Component {
 
     getAdminLastPunch = async (userarr) => {
         const promises = userarr.map(async data => {
-            const response = await fetch(`http://localhost:3000/latestpunch`, {
+            const response = await fetch(`https://mikan-app-api.herokuapp.com/latestpunch`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

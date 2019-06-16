@@ -29,7 +29,7 @@ class History extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`http://localhost:3000/loadusers`, {
+        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -45,7 +45,7 @@ class History extends React.Component {
     }
 
     historyarr = () => {
-        fetch(`http://localhost:3000/history`, {
+        fetch(`https://mikan-app-api.herokuapp.com/history`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -61,7 +61,7 @@ class History extends React.Component {
     }
 
     getFilteredHistory = (id, start, end) => {
-        fetch(`http://localhost:3000/filteredhistory`, {
+        fetch(`https://mikan-app-api.herokuapp.com/filteredhistory`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

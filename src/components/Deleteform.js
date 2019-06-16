@@ -21,7 +21,7 @@ const Deleteform = ({ route, target , onReload }) => {
 
     const submitDelete = (data) => {
         // console.log(data);
-        fetch(`http://localhost:3000/${route}`, {
+        fetch(`https://mikan-app-api.herokuapp.com/${route}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(
