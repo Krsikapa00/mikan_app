@@ -18,7 +18,7 @@ class PunchForm extends React.Component {
     
     handleScan = (data) => {
         if (data !== null) {
-            fetch('https://mikan-app-api.herokuapp.com/locationscheck', {
+            fetch('http://localhost:3000/locationscheck', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -30,7 +30,8 @@ class PunchForm extends React.Component {
                 if (!resp.id) {
                     this.setState({location: ''});
                 } else {
-                    this.setState({location: resp.name, locationcode: resp.code});
+                    this.setState({location: resp.name, locationcode: resp.code})
+                    this.onRouteChange();
                 }
             })
             .catch(err => console.log(err));
@@ -66,7 +67,7 @@ class PunchForm extends React.Component {
             const date = this.getDate();
             const actual_date = this.getActualDate();
             const time = this.getTime();
-            fetch(`https://mikan-app-api.herokuapp.com/recordpunch${inout}`, {
+            fetch(`http://localhost:3000/recordpunch${inout}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -84,10 +85,8 @@ class PunchForm extends React.Component {
                 // eslint-disable-next-line
                 if (punch.id == this.props.user.id) {
                     this.setState({route:'recipt', punch: punch });
-                    const button = document.getElementById('submit');
-                    button.disabled = true;
                 } else {
-                    console.log('punch')
+                    alert(punch)
                 }
             })
             .catch(err => console.log(err));
@@ -116,7 +115,6 @@ class PunchForm extends React.Component {
                                 <label className="db">{`Date: ${curDate}`}</label>
                                 <label className="db">{`In/Out: ${in_out}`}</label>
                             </div>
-                            <Submitbtn id="submit" value="Punch" className='w-30' onClick={this.onRouteChange}/>
                         </main>
                     </article>
                 </div>    

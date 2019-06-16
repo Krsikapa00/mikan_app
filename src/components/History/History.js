@@ -14,6 +14,7 @@ class History extends React.Component {
             searchedusername:'',
             route: 'main',
             deletedPunch: {},
+            hoursWorked: 0,
         }
     }
     
@@ -28,7 +29,7 @@ class History extends React.Component {
     }
 
     getadminlist = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/loadusers`, {
+        fetch(`http://localhost:3000/loadusers`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -44,7 +45,7 @@ class History extends React.Component {
     }
 
     historyarr = () => {
-        fetch(`https://mikan-app-api.herokuapp.com/history`, {
+        fetch(`http://localhost:3000/history`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -54,12 +55,13 @@ class History extends React.Component {
         .then(response => response.json())
         .then(puncharray =>{
             this.setState({historyarray: puncharray});
+            this.sumOfHoursWorked(puncharray);
         })
         .catch(err => console.log(err));
     }
 
     getFilteredHistory = (id, start, end) => {
-        fetch(`https://mikan-app-api.herokuapp.com/filteredhistory`, {
+        fetch(`http://localhost:3000/filteredhistory`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -73,11 +75,23 @@ class History extends React.Component {
             const { puncharr, user } = resp;
             if (puncharr){            
             this.setState({historyarray: puncharr, searchedusername:user.name });
+            this.sumOfHoursWorked(puncharr);
             } else {
                 console.log('Something went wrong');
             }
         })
         .catch(err => console.log(err));
+    }
+
+    sumOfHoursWorked = (HistoryArray) =>{
+        let sum = 0;
+        HistoryArray.forEach(function(data, i){
+            if (data.difference != null){
+                sum += (data.difference/60)
+            }
+            console.log(sum)
+        })
+        this.setState({hoursWorked:sum})
     }
 
     deletePunch = (punch) => {
@@ -145,7 +159,7 @@ class History extends React.Component {
                                             <td  className="">{data.in_time.substring(0,8)}</td>
                                             <td  className="">{data.out_date.substring(0,10)}</td>
                                             <td  className="">{data.out_time.substring(0,8)}</td>
-                                            <td  className="">{data.difference/60}</td>
+                                            <td  className="">{(data.difference/60).toFixed(2)}</td>
                                             <td  style={{display:"none"}} className="">{data.actual_in_date.substring(0,10)}</td>
                                             <td  style={{display:"none"}} className="">{data.actual_out_date.substring(0,10)}</td>
                                             
@@ -166,7 +180,7 @@ class History extends React.Component {
                         </table>
                         <div className="w-80 center ma4 pa2 bt justify-between">
                             <div className=" f3 flex " >Total Hours:</div>
-                            <div className=" f3 flex" >36</div>
+                            <div className=" f3 flex" >{this.state.hoursWorked.toFixed(2)}</div>
 
                         </div>
                         

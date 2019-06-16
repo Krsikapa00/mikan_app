@@ -25,7 +25,7 @@ class EditUsers extends React.Component {
     }
 
     editUsersArr = () =>{
-        fetch(`https://mikan-app-api.herokuapp.com/userseditlist`, {
+        fetch(`http://localhost:3000/userseditlist`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
