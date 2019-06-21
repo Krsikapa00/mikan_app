@@ -1,5 +1,5 @@
 {
-  "name": "mikan_app",
+  "name": "MJS_Services",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "MJS_Services"
   },
   "browserslist": [
     ">0.2%",
